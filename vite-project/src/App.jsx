@@ -42,13 +42,14 @@ function App() {
   
   return (
       <div>
-          <AuthenticatedTemplate>
+        <AppContent />
+          {/* <AuthenticatedTemplate>
               <AppContent />
           </AuthenticatedTemplate>
 
           <UnauthenticatedTemplate>
               <Login />
-          </UnauthenticatedTemplate>
+          </UnauthenticatedTemplate> */}
       </div>
   );
 }

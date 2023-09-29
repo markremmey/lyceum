@@ -15,13 +15,6 @@ export const msalInstance = new PublicClientApplication({
   },
 });
 
-
-// Log tokens (Take out in production)
-// const { accounts, instance } = useMsal();
-// console.log("Authenticated accounts:", accounts);
-// // Or
-// console.log("Current instance:", instance);
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
