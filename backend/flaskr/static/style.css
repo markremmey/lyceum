@@ -1,135 +1,149 @@
-html {
-    font-family: sans-serif;
-    background: #eee;
-    padding: 1rem;
-  }
-  
-  body {
-    max-width: 960px;
-    margin: 0 auto;
-    background: white;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: serif;
-    color: #377ba8;
-    margin: 1rem 0;
-  }
-  
-  a {
-    color: #377ba8;
-  }
-  
-  hr {
-    border: none;
-    border-top: 1px solid lightgray;
-  }
-  
-  nav {
-    background: lightgray;
-    display: flex;
-    align-items: center;
-    padding: 0 0.5rem;
-  }
-  
-  nav h1 {
-    flex: auto;
-    margin: 0;
-  }
-  
-  nav h1 a {
-    text-decoration: none;
-    padding: 0.25rem 0.5rem;
-  }
-  
-  nav ul  {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  nav ul li a, nav ul li span, header .action {
-    display: block;
-    padding: 0.5rem;
-  }
-  
-  .content {
-    padding: 0 1rem 1rem;
-  }
-  
-  .content > header {
-    border-bottom: 1px solid lightgray;
-    display: flex;
-    align-items: flex-end;
-  }
-  
-  .content > header h1 {
-    flex: auto;
-    margin: 1rem 0 0.25rem 0;
-  }
-  
-  .flash {
-    margin: 1em 0;
-    padding: 1em;
-    background: #cae6f6;
-    border: 1px solid #377ba8;
-  }
-  
-  .post > header {
-    display: flex;
-    align-items: flex-end;
-    font-size: 0.85em;
-  }
-  
-  .post > header > div:first-of-type {
-    flex: auto;
-  }
-  
-  .post > header h1 {
-    font-size: 1.5em;
-    margin-bottom: 0;
-  }
-  
-  .post .about {
-    color: slategray;
-    font-style: italic;
-  }
-  
-  .post .body {
-    white-space: pre-line;
-  }
-  
-  .content:last-child {
-    margin-bottom: 0;
-  }
-  
-  .content form {
-    margin: 1em 0;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .content label {
-    font-weight: bold;
-    margin-bottom: 0.5em;
-  }
-  
-  .content input, .content textarea {
-    margin-bottom: 1em;
-  }
-  
-  .content textarea {
-    min-height: 12em;
-    resize: vertical;
-  }
-  
-  input.danger {
-    color: #cc2f2e;
-  }
-  
-  input[type=submit] {
-    align-self: start;
-    min-width: 10em;
-  }
-  
+body {
+  margin-left: 20%;
+  margin-right: 20%;
+  text-align: justify;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  text-align: center;
+  font-style: normal;
+  font-weight:
+      normal;
+  line-height: 1.5;
+  margin-top: .5em;
+  margin-bottom: .5em;
+}
+
+h1 {
+  font-size: 300%;
+  margin-top: 0.6em;
+  margin-bottom: 0.6em;
+  letter-spacing: 0.12em;
+  word-spacing: 0.2em;
+  text-indent: 0em;
+}
+
+h2 {
+  font-size: 150%;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+h3 {
+  font-size: 140%;
+  margin-top: 1em;
+}
+
+h4 {
+  font-size: 110%;
+}
+
+h5 {
+  font-size: 110%;
+}
+
+.no-break {
+  page-break-before: avoid;
+}
+
+/* for epubs */
+
+div.chapter {
+  page-break-before: always;
+  margin-top: 4em;
+}
+
+hr {
+  width: 80%;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+p {
+  text-indent: 1em;
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+p.center {
+  text-align: center;
+  text-indent: 0em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+p.footnote {
+  font-size: 90%;
+  text-indent: 0%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+sup {
+  vertical-align: top;
+  font-size: 0.6em;
+}
+
+a:link {
+  color: blue;
+  text-decoration: none
+}
+
+a:visited {
+  color: blue;
+  text-decoration: none
+}
+
+a:hover {
+  color: red
+}
+
+pre {
+  font-style: italic;
+  font-size: 90%;
+  margin-left: 10%;
+}
+
+.arrow-button {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-left: 40px solid #4CAF50; /* Change the color to your preferred button color */
+  background: none;
+  cursor: pointer;
+  margin: 20px; /* Adjust margin as needed */
+}
+
+.arrow-button:hover {
+  border-left-color: #45a049; /* Change the color to your preferred hover color */
+}
+
+.button {
+  text-align: right; /* Align the button to the right */
+  padding: 10px; /* Add padding as needed */
+}
+
+
+.arrow-button-left {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-right: 40px solid #4CAF50; /* Change the color to your preferred button color */
+  background: none;
+  cursor: pointer;
+  margin: 20px; /* Adjust margin as needed */
+}
+
+.arrow-button-left:hover {
+  border-right-color: #45a049; /* Change the color to your preferred hover color */
+}

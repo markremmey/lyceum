@@ -1,0 +1,9 @@
+{% extends "base-lyceum.html" %}
+
+{% block content %}
+<div>
+    <form action="{{ url_for('lyceum.next_text') }}" method="post">
+        <input type="submit" value="Next Text">
+    </form>
+</div>
+{% endblock %}
