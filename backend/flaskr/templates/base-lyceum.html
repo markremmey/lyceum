@@ -15,16 +15,15 @@
         <h1> Chapter 1 </h1>
         <h2> {% block header %}{% endblock %} </h2>
 
-        <p>
-          {% block content %}{% endblock %}
-        </p>
-        <div class="button">
-          <form method="post" action="{{ url_for('lyceum.prev_text') }}">
-              <button type="submit" class="arrow-button-left"></button>
-          </form>
-          <form method="post" action="{{ url_for('lyceum.next_text') }}">
-              <button type="submit" class="arrow-button"></button>
-          </form>
-      </div>
-      
-      </div>
+            <div class="content-container", style="display: flex; align-items: center;">
+                <form method="post" action="{{ url_for('lyceum.prev_text') }}" style="flex-shrink: 0;">
+                    <button type="submit" class="arrow-button-left"></button>
+                </form>
+                <p>
+                {% block content %}{% endblock %}
+                </p>
+                <form method="post" action="{{ url_for('lyceum.next_text') }}" style="flex-shrink: 0;">
+                    <button type="submit" class="arrow-button"></button>
+                </form>
+            </div>
+    </div>

@@ -11,6 +11,7 @@ from flask import (
 
 # This creates a "Blueprint" or an organization of routes
 # 
+logging.basicConfig(level=logging.DEBUG)
 bp = Blueprint('lyceum', __name__, url_prefix='/lyceum')
 
 @bp.route('/')
@@ -34,14 +35,18 @@ def next_text():
         credential=storage_creds
     )
     blob_container = blob_service.get_container_client('silver')
+
+    file_number = session.get('file_number', 0)
+    if file_number>39:
+        file_number = 0
     
-    file_number = session.get('file_number', 1)
+
     logging.debug('File number (next Text): ' + str(file_number))
 
     title = 'The History Of The Decline And Fall Of The Roman Empire, Complete'
     path = title + '/' + str(file_number) + '.txt'
 
-    logging.info('Path: ' + path)
+    logging.debug('Path: ' + path)
     content = blob_container.download_blob(path).readall()
 
     cleaned_text = re.sub(r"\\r\\n|b'", '', content.decode('utf-8'))
