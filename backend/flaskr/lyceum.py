@@ -1,16 +1,21 @@
 import functools
 from azure.storage.blob import BlobServiceClient
 from dotenv import load_dotenv
+import openai
 import os
 import logging
 import re
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, jsonify, g, redirect, render_template, request, session, url_for
 )
 
+openai.api_type = "azure"
+openai.api_base = os.getenv("AZ_BASE")
+openai.api_version = "2023-07-01-preview"
+openai.api_key = os.getenv("AZ_OPENAI_API_KEY")
+
 # This creates a "Blueprint" or an organization of routes
-# 
 logging.basicConfig(level=logging.DEBUG)
 bp = Blueprint('lyceum', __name__, url_prefix='/lyceum')
 
@@ -86,4 +91,29 @@ def prev_text():
 
     logging.debug('File number (prev Text): ' + str(file_number))
 
-    return render_template('lyceum/lyceum-extension.html', header=header, content=cleaned_text)
+    return render_template('lyceum/lyceum-extension.html', header=header)
+
+
+
+@bp.route('/commentary', methods=('GET', 'POST'))
+def commentary():
+    messages = []
+    # text=request.form['text']
+    text = "Theodoric the Ostrogoth, the fourteenth in lineal descent of the royal line of the Amali, was born in the neighborhood of Vienna two years after the death of Attila."
+    prompt = f"Can you explain the following text?  Text: {text}"
+    openai.api_key = os.getenv("AZ_OPENAI_API_KEY")
+    
+    messages.append({"role": "user", "content": prompt})
+    # messages.append({"role": "assistant", "content": f"{item['label']}"})
+    
+    response = openai.ChatCompletion.create(
+                engine="chat",
+                messages = messages,
+                temperature=0.7,
+                max_tokens=3,
+                top_p=0.95,
+                frequency_penalty=0,
+                presence_penalty=0,
+                stop=None)
+    
+    return render_template(content = jsonify(response.choices[0].message.content))

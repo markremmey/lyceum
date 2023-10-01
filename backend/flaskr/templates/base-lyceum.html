@@ -26,4 +26,28 @@
                     <button type="submit" class="arrow-button"></button>
                 </form>
             </div>
+            
+            <form method="post" action="{{ url_for('lyceum.commentary')}}">
+                <button type="submit">Submit Highlighted Text</button>
+            </form>
+            <div class="response-text">
+                <p id="response-text">
+                    {% block commentary %}{% endblock %}
+                </p>
+
+            </div>
+
+            <!-- <script>
+                function submitHighlightedText() {
+                    var selectedText = window.getSelection().toString();
+                    $.ajax({
+                        url: "{{ url_for('lyceum.process_text') }}",
+                        method: "POST",
+                        data: { text: selectedText },
+                        success: function(response) {
+                            $('#response-text').text(response.new_text);
+                        }
+                    });
+                }
+            </script> -->
     </div>

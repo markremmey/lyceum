@@ -28,14 +28,14 @@ def create_app(test_config=None):
     def hello():
         return 'Hello, World!'
 
-    from . import auth
-    app.register_blueprint(auth.bp)
-    from . import db
-    db.init_app(app)
+    # from . import auth
+    # app.register_blueprint(auth.bp)
+    # from . import db
+    # db.init_app(app)
 
     from . import lyceum
     app.register_blueprint(lyceum.bp)
-    app.add_url_rule('/', endpoint='lyceum.index')
+    app.add_url_rule('/', endpoint='lyceum.lyceum-extension')
     
     return app
 
