@@ -6,6 +6,9 @@ import os
 import logging
 import re
 
+from flaskr.auth import login_required
+from flaskr.db import get_db
+
 from flask import (
     Blueprint, flash, jsonify, g, redirect, render_template, request, session, url_for
 )
@@ -26,6 +29,7 @@ def index():
 # now, rather than calling app.route() like we usually would with flask
 # we are just calling the route for this blueprint
 @bp.route('/next_text', methods=('GET', 'POST'))
+@login_required
 def next_text():
     ## Create function to retrieve next item in blob storage after user clicks a button
     header = ""
@@ -59,7 +63,7 @@ def next_text():
     session['file_number'] = file_number+1
     
 
-    return render_template('lyceum/lyceum-extension.html', header=header, content=cleaned_text)
+    return render_template('lyceum/lyceum-extension.html', header=header, paragraph_content=cleaned_text)
 
 @bp.route('/prev_text', methods=('GET', 'POST'))
 def prev_text():
@@ -91,7 +95,7 @@ def prev_text():
 
     logging.debug('File number (prev Text): ' + str(file_number))
 
-    return render_template('lyceum/lyceum-extension.html', header=header)
+    return render_template('lyceum/lyceum-extension.html', header=header, paragraph_content=cleaned_text)
 
 
 
@@ -100,7 +104,7 @@ def commentary():
     messages = []
     # text=request.form['text']
     text = "Theodoric the Ostrogoth, the fourteenth in lineal descent of the royal line of the Amali, was born in the neighborhood of Vienna two years after the death of Attila."
-    prompt = f"Can you explain the following text?  Text: {text}"
+    prompt = f"Can you explain the following text?  Text: '{text}'"
     openai.api_key = os.getenv("AZ_OPENAI_API_KEY")
     
     messages.append({"role": "user", "content": prompt})
@@ -116,4 +120,7 @@ def commentary():
                 presence_penalty=0,
                 stop=None)
     
-    return render_template(content = jsonify(response.choices[0].message.content))
+    logging.debug('Response: ' + str(response))
+    logging.debug('Response Content: ', response.choices[0].message.content)
+    
+    return render_template('lyceum/lyceum-extension.html', commentary = jsonify(response.choices[0].message.content))

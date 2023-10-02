@@ -4,50 +4,35 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<meta http-equiv="Content-Style-Type" content="text/css" />
 	<title>The Project Gutenberg eBook of Democracy in America, Part I. by Alexis de Tocqueville</title>
-
 	<link rel="coverpage" href="images/cover.jpg" />
-
 </head>
 
+
+<nav>
+    <h1>Lyceum</h1>
+    <ul>
+      {% if g.user %}
+        <li><span>{{ g.user['username'] }}</span>
+        <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
+      {% else %}
+        <li><a href="{{ url_for('auth.register') }}">Register</a>
+        <li><a href="{{ url_for('auth.login') }}">Log In</a>
+      {% endif %}
+    </ul>
+  </nav>
+
 <body>
-
     <div class="chapter">
-        <h1> Chapter 1 </h1>
+        <!-- <h1> Chapter 1 </h1> -->
         <h2> {% block header %}{% endblock %} </h2>
-
-            <div class="content-container", style="display: flex; align-items: center;">
-                <form method="post" action="{{ url_for('lyceum.prev_text') }}" style="flex-shrink: 0;">
-                    <button type="submit" class="arrow-button-left"></button>
-                </form>
-                <p>
-                {% block content %}{% endblock %}
-                </p>
-                <form method="post" action="{{ url_for('lyceum.next_text') }}" style="flex-shrink: 0;">
-                    <button type="submit" class="arrow-button"></button>
-                </form>
-            </div>
+        {% block content %}{% endblock %}
             
-            <form method="post" action="{{ url_for('lyceum.commentary')}}">
-                <button type="submit">Submit Highlighted Text</button>
-            </form>
-            <div class="response-text">
-                <p id="response-text">
-                    {% block commentary %}{% endblock %}
-                </p>
-
-            </div>
-
-            <!-- <script>
-                function submitHighlightedText() {
-                    var selectedText = window.getSelection().toString();
-                    $.ajax({
-                        url: "{{ url_for('lyceum.process_text') }}",
-                        method: "POST",
-                        data: { text: selectedText },
-                        success: function(response) {
-                            $('#response-text').text(response.new_text);
-                        }
-                    });
-                }
-            </script> -->
+        <form method="post" action="{{ url_for('lyceum.commentary')}}">
+            <button type="submit">Submit Highlighted Text</button>
+        </form>
+        <div class="response-text">
+            <p id="response-text">
+                {% block commentary %}{% endblock %}
+            </p>
+        </div>
     </div>

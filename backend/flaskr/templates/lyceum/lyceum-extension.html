@@ -1,11 +1,22 @@
 {% extends "base-lyceum.html" %}
 
 {% block header %}
-{{ header }}
+<h1> Chapter 1 </h1>
 {% endblock %}
 
 {% block content %}
-{{ content }}
+<div class="content-container", style="display: flex; align-items: center;">
+    <form method="post" action="{{ url_for('lyceum.prev_text') }}" style="flex-shrink: 0;">
+        <button type="submit" class="arrow-button-left"></button>
+    </form>
+    <p>
+        {{ paragraph_content }}
+    </p>
+    <form method="post" action="{{ url_for('lyceum.next_text') }}" style="flex-shrink: 0;">
+        <button type="submit" class="arrow-button"></button>
+    </form>
+</div>
+
 {% endblock %}
 
 {% block commentary %}
