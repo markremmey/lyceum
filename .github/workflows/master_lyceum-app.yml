@@ -54,6 +54,9 @@ jobs:
           name: python-app
           path: .
           
+      - name: 'Check Directory'
+        run: ls -la
+        
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
