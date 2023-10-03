@@ -53,6 +53,11 @@ jobs:
         with:
           name: python-app
           path: .
+      
+      - name: Run Azure CLI command
+        run: |
+          az --version
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
