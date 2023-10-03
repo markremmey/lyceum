@@ -54,8 +54,8 @@ jobs:
           name: python-app
           path: .
           
-      - name: 'Check Directory'
-        run: ls -la
+      - name: 'Print Publish Profile'
+        run: echo secrets.AZUREAPPSERVICE_PUBLISHPROFILE_91AB677B7F6547648FF5772CDC5D7EC3
         
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
