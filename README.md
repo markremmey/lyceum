@@ -10,6 +10,7 @@ https://learn.microsoft.com/en-us/azure/active-directory-b2c/configure-authentic
 - https://flask.palletsprojects.com/en/2.3.x/patterns/caching/
 - https://flask.palletsprojects.com/en/2.3.x/patterns/singlepageapplications/
 - https://flask.palletsprojects.com/en/2.3.x/quickstart/
+- https://flask.palletsprojects.com/en/2.3.x/async-await/
 
 MVP:
 - Allow users to select from list of books
