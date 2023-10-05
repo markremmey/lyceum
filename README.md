@@ -5,6 +5,12 @@ https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/
 https://learn.microsoft.com/en-us/azure/active-directory-b2c/configure-authentication-sample-python-web-app?tabs=windows
 
 
+- https://flask.palletsprojects.com/en/2.3.x/patterns/streaming/
+- https://flask.palletsprojects.com/en/2.3.x/tutorial/deploy/
+- https://flask.palletsprojects.com/en/2.3.x/patterns/caching/
+- https://flask.palletsprojects.com/en/2.3.x/patterns/singlepageapplications/
+- https://flask.palletsprojects.com/en/2.3.x/quickstart/
+
 MVP:
 - Allow users to select from list of books
 - Stream GPT commentary
