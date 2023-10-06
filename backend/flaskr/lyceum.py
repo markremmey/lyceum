@@ -111,29 +111,18 @@ def prev_text():
 
     return render_template('lyceum/lyceum-extension.html', paragraph_content=cleaned_text)
 
-@bp.route('/commentary', methods=('GET', 'POST'))
+@bp.route('/commentary')
 def commentary():
-    text=request.form['highlightedText']
-    
+    text = request.args.get('highlightedText')
     def read_stream(reader):
         for chunk in reader:
-        # print(chunk)
             if len(chunk.choices)>0:
-                # print(chunk.choices[0].delta)
                 if 'content' in chunk.choices[0].delta:
-                    # print(chunk.choices[0].delta.content)
-                    yield chunk.choices[0].delta.content# f'data: %s\n\n' % chunk.choices[0].delta.content
-    # text = "Theodoric the Ostrogoth, the fourteenth in lineal descent of the royal line of the Amali, was born in the neighborhood of Vienna two years after the death of Attila."
+                    yield f'data: %s\n\n' % chunk.choices[0].delta.content #chunk.choices[0].delta.content# 
+        yield "event: end\ndata: END\n\n"
     prompt = f"Can you explain the following text?  Text: '{text}'"
 
     reader = streamOpenAI(prompt)
-    # for items in g:
-    #     logging.debug(f'\n\n\ng: {items}\n\n\n')
-    # if not getattr(g, 'isStreamExecuted', False):
-    #     reader = streamOpenAI(prompt) # Reader is a generator
-    #     g.isStreamExecuted=True
-    #     for items in g:
-    #         logging.debug(f'\n\n\nAfter Stream g: {items}\n\n\n')
 
     return Response(stream_with_context(read_stream(reader)), 
                     content_type='text/event-stream')

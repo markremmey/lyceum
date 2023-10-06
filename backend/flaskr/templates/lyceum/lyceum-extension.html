@@ -22,42 +22,27 @@
 {% block commentary %}
     <form id="commentaryForm", method="post">
         <input type="text" name="highlightedText" id="highlightedText" required>
-        <button type="submit">Submit Highlighted Text</button>
+        <button type="submit">Ask GPT</button>
     </form>
     <div class="response-text">
         <p id="response-text"></p>
     </div>
     <script type="text/javascript">
-        // var isExecuted = false;
         document.getElementById('commentaryForm').addEventListener('submit', function(event) {
-            event.preventDefault();  // Prevent the form from submitting the traditional way
-        // Send the data to the server using the Fetch API
+            event.preventDefault();
+    
             var highlightedText = document.getElementById('highlightedText').value;
-            console.log('\n\nSubmitting fetch...')
-            fetch("{{ url_for('lyceum.commentary') }}", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'highlightedText=' + encodeURIComponent(highlightedText), // or use new URLSearchParams({highlightedText}).toString(),
-            })
-            console.log('\nfetch submitted')
-            // .then(response => response.text())  // or response.json() if the server returns JSON
-            // .then(data => {
-            //     // Handle the server response here
-            //     var p = document.getElementById('response-text');
-            //     p.textContent = data;
-            // })
-            // .catch((error) => {
-            //     console.error('Error:', error);
-            // });
-            var eventSource = new EventSource("{{ url_for('lyceum.commentary') }}");
-            console.log('\nNew Event Source Instantiated')
+    
+            // Set up SSE to receive streamed data, sending highlightedText as a query parameter
+            var url = '{{ url_for("lyceum.commentary") }}' + '?highlightedText=' + encodeURIComponent(highlightedText);
+            var eventSource = new EventSource(url);
             eventSource.onmessage = function(event) {
                 var p = document.getElementById('response-text');
-                p.textContent += event.data + ' ';  // Add each word to the paragraph
+                p.textContent += event.data + '';  // Add each word to the paragraph
             };
-    });
-</script>
-
+            eventSource.addEventListener('end', function(event) {
+                eventSource.close();  // Close the connection when the 'end' event is received
+            }, false);
+        });
+    </script>
 {% endblock %}
