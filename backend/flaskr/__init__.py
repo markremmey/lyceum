@@ -43,5 +43,3 @@ def create_app(test_config=None):
     app.add_url_rule('/', endpoint='lyceum.index')
     
     return app
-
-    # app.register_blueprint(lyceum, url_prefix='/')

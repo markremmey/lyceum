@@ -25,14 +25,6 @@
     <div class="chapter">
         <!-- <h1> Chapter 1 </h1> -->
         <h2> {% block header %}{% endblock %} </h2>
-        {% block content %}{% endblock %}
-            
-        <form method="post" action="{{ url_for('lyceum.commentary')}}">
-            <button type="submit">Submit Highlighted Text</button>
-        </form>
-        <div class="response-text">
-            <p id="response-text">
-                {% block commentary %}{% endblock %}
-            </p>
-        </div>
+        {% block content %}{% endblock %}  
+        {% block commentary %}{% endblock %}
     </div>

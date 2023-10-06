@@ -20,5 +20,24 @@
 {% endblock %}
 
 {% block commentary %}
-{{commentary}}
+    <form id="commentaryForm", method="post" action="{{ url_for('lyceum.commentary')}}">
+        <button type="submit">Submit Highlighted Text</button>
+    </form>
+    <div class="response-text">
+        <p id="response-text"></p>
+    </div>
+    <script type="text/javascript">
+        var isExecuted = false;
+        document.getElementById('commentaryForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent the form from submitting the traditional way
+            if (!isExecuted) {
+                isExecuted = true;
+                var eventSource = new EventSource('/lyceum/commentary');
+                eventSource.onmessage = function(event) {
+                    var p = document.getElementById('response-text');
+                    p.textContent += event.data;
+                };
+            };
+        });
+    </script>
 {% endblock %}
