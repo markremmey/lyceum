@@ -49,7 +49,7 @@ def streamOpenAI(prompt):
             engine="chat",
             messages = messages,
             temperature=0.7,
-            max_tokens=3,
+            max_tokens=75,
             top_p=0.95,
             frequency_penalty=0,
             presence_penalty=0,
@@ -113,7 +113,7 @@ def prev_text():
 
 @bp.route('/commentary', methods=('GET', 'POST'))
 def commentary():
-    # text=request.form['text']
+    text=request.form['highlightedText']
     
     def read_stream(reader):
         for chunk in reader:
@@ -122,17 +122,18 @@ def commentary():
                 # print(chunk.choices[0].delta)
                 if 'content' in chunk.choices[0].delta:
                     # print(chunk.choices[0].delta.content)
-                    yield f'data: %s\n\n' % chunk.choices[0].delta.content
-    text = "Theodoric the Ostrogoth, the fourteenth in lineal descent of the royal line of the Amali, was born in the neighborhood of Vienna two years after the death of Attila."
+                    yield chunk.choices[0].delta.content# f'data: %s\n\n' % chunk.choices[0].delta.content
+    # text = "Theodoric the Ostrogoth, the fourteenth in lineal descent of the royal line of the Amali, was born in the neighborhood of Vienna two years after the death of Attila."
     prompt = f"Can you explain the following text?  Text: '{text}'"
 
-    for items in g:
-        logging.debug(f'\n\n\ng: {items}\n\n\n')
-    if not getattr(g, 'isStreamExecuted', False):
-        reader = streamOpenAI(prompt) # Reader is a generator
-        g.isStreamExecuted=True
-        for items in g:
-            logging.debug(f'\n\n\nAfter Stream g: {items}\n\n\n')
+    reader = streamOpenAI(prompt)
+    # for items in g:
+    #     logging.debug(f'\n\n\ng: {items}\n\n\n')
+    # if not getattr(g, 'isStreamExecuted', False):
+    #     reader = streamOpenAI(prompt) # Reader is a generator
+    #     g.isStreamExecuted=True
+    #     for items in g:
+    #         logging.debug(f'\n\n\nAfter Stream g: {items}\n\n\n')
 
     return Response(stream_with_context(read_stream(reader)), 
                     content_type='text/event-stream')
