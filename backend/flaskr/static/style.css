@@ -159,8 +159,27 @@ pre {
   text-align: center; /* Center the content within the form */
 }
 
+.text-input {
+  width: 80%; /* Adjust the width as needed */
+  padding: 10px; /* Add padding for a comfortable typing area */
+  margin: 10px 0; /* Add margin to separate it from other elements */
+  border: 1px solid #ccc; /* Change border color to a light gray */
+  border-radius: 4px; /* Add rounded corners for a modern look */
+  font-size: 16px; /* Adjust font size for readability */
+}
+
 /* Style for the button */
 .submit-button {
-  display: inline-block; /* Make the button an inline-block element */
-  margin: 0 auto; /* Auto margins on left and right will center the button */
+  padding: 10px 20px; /* Add padding for a comfortable click area */
+  border: none; /* Remove the default border */
+  border-radius: 4px; /* Add rounded corners */
+  background-color: #4CAF50; /* Add a background color */
+  color: white; /* Change the text color to white */
+  font-size: 16px; /* Adjust font size for readability */
+  cursor: pointer; /* Change the cursor to a pointer on hover */
+}
+
+/* Add a hover effect for the button */
+.submit-button:hover {
+  background-color: #45a049; /* Darken the background color on hover */
 }
