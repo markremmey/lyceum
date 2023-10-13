@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+    background: url('./pictures/aristotle.png') no-repeat center center;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.6);
+    padding: 30px 50px;
+    border-radius: 8px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+}
+
+.orange-bar {
+    width: 30px;
+    height: 5px;
+    background-color: orange;
+    margin-right: 10px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.links {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.link {
+    text-decoration: none;
+    padding: 10px 15px;
+    border: 1px solid black;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.link:hover {
+    background-color: #f5f5f5;
+}
+
+/* ... Your existing CSS ... */
+
+.main-container {
+    display: flex;
+    align-items: center;  /* vertically align the image and container */
+    justify-content: center;  /* horizontally center the content */
+}
+
+.inline-image {
+    margin-right: 20px;  /* space between the image and the container */
+    width: auto;  /* adjust as needed */
+    height: 100vh;
+}

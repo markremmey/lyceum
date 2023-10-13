@@ -10,10 +10,18 @@ import time
 from flaskr.auth import login_required
 from flaskr.db import get_db
 
+
 from flask import (
     Blueprint, flash, jsonify, g, redirect, render_template, request, session, url_for,
     render_template_string, stream_with_context, Response
 )
+
+from flask import Flask
+from flask_htmx import HTMX
+
+# app = Flask(__name__)
+# htmx = HTMX(app)
+
 logging.basicConfig(level=logging.DEBUG)
 
 
@@ -58,8 +66,8 @@ def streamOpenAI(prompt):
     return response
 
 @bp.route('/')
-def index():
-    return render_template('lyceum/index.html')
+def home():
+    return render_template('base-homepage.html')
 
 # now, rather than calling app.route() like we usually would with flask
 # we are just calling the route for this blueprint
