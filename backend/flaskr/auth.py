@@ -58,7 +58,7 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['id']
-            return redirect(url_for('lyceum.index'))
+            return redirect(url_for('lyceum.next_text'))
 
         flash(error)
 

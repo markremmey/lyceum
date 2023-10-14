@@ -1,10 +1,14 @@
 import os
 
 from flask import Flask
+from flask_htmx import HTMX
+from flask_htmx.responses import HTMXResponseClientRedirect
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
+
+    htmx = HTMX(app)
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
@@ -40,6 +44,8 @@ def create_app(test_config=None):
 
     from . import lyceum
     app.register_blueprint(lyceum.bp)
-    app.add_url_rule('/', endpoint='lyceum.index')
+
+    app.add_url_rule('/', endpoint='lyceum.home')
     
     return app
+

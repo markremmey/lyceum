@@ -1,28 +1,34 @@
-import functools
+# import functools
 from azure.storage.blob import BlobServiceClient
 from dotenv import load_dotenv
 import openai
 import os
 import logging
 import re
-import time
+# import time
 
 from flaskr.auth import login_required
-from flaskr.db import get_db
+# from flaskr.db import get_db
+
 
 from flask import (
     Blueprint, flash, jsonify, g, redirect, render_template, request, session, url_for,
     render_template_string, stream_with_context, Response
 )
-logging.basicConfig(level=logging.DEBUG)
 
+from flask import Flask
+from flask_htmx import HTMX
+
+# app = Flask(__name__)
+# htmx = HTMX(app)
+
+logging.basicConfig(level=logging.DEBUG)
+load_dotenv('../.env')
 
 openai.api_type = "azure"
 openai.api_base = os.getenv("AZ_BASE")
 openai.api_version = "2023-07-01-preview"
 openai.api_key = os.getenv("AZ_OPENAI_API_KEY")
-
-load_dotenv('../.env')
 
 storageaccount = os.getenv('STORAGE_ACCOUNT')
 storage_creds = os.getenv('SAS_TOKEN')
@@ -41,8 +47,7 @@ isStreamExecuted=False
 bp = Blueprint('lyceum', __name__, url_prefix='/lyceum')
 
 def streamOpenAI(prompt):
-    messages = []
-    
+    messages = []    
     messages.append({"role": "user", "content": prompt})
 
     response = openai.ChatCompletion.create(
@@ -58,16 +63,20 @@ def streamOpenAI(prompt):
     return response
 
 @bp.route('/')
-def index():
-    return render_template('lyceum/index.html')
+def home():
+    return render_template('base-homepage.html')
+
+@bp.route('/select_book', methods=('GET', 'POST'))
+def selectBook():
+    return render_template()
 
 # now, rather than calling app.route() like we usually would with flask
 # we are just calling the route for this blueprint
 @bp.route('/next_text', methods=('GET', 'POST'))
-@login_required
+# @login_required
 def next_text():
-    ## Create function to retrieve next item in blob storage after user clicks a button
-    header = ""
+    # Create function to retrieve next item in blob storage after user clicks a button
+    # header = ""
     content = ""
 
     file_number = session.get('file_number', 0)
@@ -120,7 +129,7 @@ def commentary():
                 if 'content' in chunk.choices[0].delta:
                     yield f'data: %s\n\n' % chunk.choices[0].delta.content #chunk.choices[0].delta.content# 
         yield "event: end\ndata: END\n\n"
-    prompt = f"Can you explain the following text?  Text: '{text}'"
+    prompt = f"{text}"
 
     reader = streamOpenAI(prompt)
 

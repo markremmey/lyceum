@@ -1,0 +1,17 @@
+body {
+    font-family: Arial, sans-serif;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+}
+
+.book {
+    background: rgba(255, 255, 255, 0.6);
+    width: auto;  /* adjust as needed */
+    height: 20vh;
+    padding: 30px 50px;
+    border-radius: 8px; 
+}
