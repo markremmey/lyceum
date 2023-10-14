@@ -17,8 +17,8 @@
             </div>
             <div class="links">
                 <a href="{{ url_for('lyceum.next_text') }}" class="link">Try It Out</a>
-                <a href="#" class="link">Log in</a>
-                <a href="#" class="link">Register</a>
+                <a href="{{ url_for('auth.login') }}" class="link">Log in</a>
+                <a href="{{ url_for('auth.register') }}" class="link">Register</a>
             </div>
         </div>
     </div>
