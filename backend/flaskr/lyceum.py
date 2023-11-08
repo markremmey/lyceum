@@ -1,6 +1,7 @@
 # import functools
 from azure.storage.blob import BlobServiceClient
 from dotenv import load_dotenv
+import identity
 import openai
 import os
 import logging
@@ -10,6 +11,12 @@ import re
 from flaskr.auth import login_required
 # from flaskr.db import get_db
 
+import sys
+sys.path.append('.')
+
+import app_config
+
+__version__ = "0.7.0"
 
 from flask import (
     Blueprint, flash, jsonify, g, redirect, render_template, request, session, url_for,
@@ -25,10 +32,13 @@ from flask_htmx import HTMX
 logging.basicConfig(level=logging.DEBUG)
 load_dotenv('../.env')
 
+app = Flask(__name__)
+app.config.from_object(app_config)
+
 openai.api_type = "azure"
 openai.api_base = os.getenv("AZ_BASE")
 openai.api_version = "2023-07-01-preview"
-openai.api_key = os.getenv("AZ_OPENAI_API_KEY")
+openai.api_key =  os.getenv("APIM_OPENAI_API_KEY") # os.getenv("AZ_OPENAI_API_KEY")
 
 storageaccount = os.getenv('STORAGE_ACCOUNT')
 storage_creds = os.getenv('SAS_TOKEN')
@@ -62,18 +72,30 @@ def streamOpenAI(prompt):
             stop=None)
     return response
 
+
+auth = identity.web.Auth(
+    session=session,
+    authority=app.config["AUTHORITY"],
+    client_id=app.config["CLIENT_ID"],
+    client_credential=app.config["CLIENT_SECRET"],
+)
+
 @bp.route('/')
-def home():
-    return render_template('base-homepage.html')
+def login():
+    return render_template("base-homepage.html", version=__version__, **auth.log_in(
+        scopes=app_config.SCOPE, # Have user consent to scopes during log-in
+        redirect_uri=url_for("auth.auth_response", _external=True), # Optional. If present, this absolute URL must match your app's redirect_uri registered in Azure Portal
+    ))
+import flaskr.auth
 
 @bp.route('/select_book', methods=('GET', 'POST'))
-def selectBook():
+def select_book():
     return render_template()
 
 # now, rather than calling app.route() like we usually would with flask
 # we are just calling the route for this blueprint
 @bp.route('/next_text', methods=('GET', 'POST'))
-# @login_required
+@login_required
 def next_text():
     # Create function to retrieve next item in blob storage after user clicks a button
     # header = ""
@@ -135,3 +157,7 @@ def commentary():
 
     return Response(stream_with_context(read_stream(reader)), 
                     content_type='text/event-stream')
+
+@bp.route('/htmx-endpoint')
+def htmx():
+    return "<h1>Updated with HTMX</h1>"

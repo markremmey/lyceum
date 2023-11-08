@@ -45,7 +45,7 @@ def create_app(test_config=None):
     from . import lyceum
     app.register_blueprint(lyceum.bp)
 
-    app.add_url_rule('/', endpoint='lyceum.home')
+    app.add_url_rule('/', endpoint='lyceum.login')
     
     return app
 
