@@ -5,20 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lyceum</title>
     <link rel="stylesheet" href="../static/style-home.css">
+    <script src="https://unpkg.com/htmx.org@1.9.6" integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="main-container">
         <img src="../static/images/Aristotle.png" alt="Description" class = "inline-image">
 
-        <div class="container">
+        <div class="container" id="title-id">
             <div class="header">
                 <div class="orange-bar"></div>
                 <h1>Lyceum</h1>
             </div>
             <div class="links">
                 <a href="{{ url_for('lyceum.next_text') }}" class="link">Try It Out</a>
-                <a href="{{ url_for('auth.login') }}" class="link">Log in</a>
-                <a href="{{ url_for('auth.register') }}" class="link">Register</a>
+                    
+                <a href="{{ url_for('lyceum.htmx') }}" class="link" hx-get="/htmx-endpoint"
+                    hx-trigger="click"
+                    hx-target="#title-id"
+                    hx-swap="outerHTML"
+                >
+                    Click Me!
+                </a> 
+                    
+                {% if user_code %}
+                <ol>
+                  <li>To sign in, type <b>{{ user_code }}</b> into
+                    <a href='{{ auth_uri }}' target=_blank>{{ auth_uri }}</a>
+                    to authenticate.
+                  </li>
+                  <li>And then <a href="{{ url_for('auth.auth_response') }}">proceed</a>.</li>
+                </ol>
+                {% else %}
+                <a href='{{ auth_uri }}' class="link">Sign In</a>
+                {% endif %}
+
+                {% if config.get("B2C_RESET_PASSWORD_AUTHORITY") %}
+                <a href="{{config.get('B2C_RESET_PASSWORD_AUTHORITY')}}?client_id={{config.get('CLIENT_ID')}}">Reset Password</a>
+                {% endif %}
             </div>
         </div>
     </div>
